@@ -31,3 +31,14 @@ function bgfw_activation_settings()
         wp_die(__('Sorry, but this plugin requires WooCommerce in order to work.So please ensure that WooCommerce is both installed and activated.', 'http://wordpress.org/extend/plugins/woocommerce/'), 'Plugin dependency check', array('back_link' => true));
     }
 }
+
+/*
+ * Let's change the sale discount
+ */
+add_filter('woocommerce_sale_flash', 'dbfw_discount_text', 10, 2);
+
+function dbfw_discount_text($html, $flash)
+{
+    $html = $html . 'off';
+    return $html;
+}
