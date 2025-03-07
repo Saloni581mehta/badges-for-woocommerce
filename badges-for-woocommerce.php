@@ -122,5 +122,6 @@ function bgfw_display_discount_badge()
 
 }
 
+add_action('woocommerce_single_product_summary', 'bgfw_display_discount_badge', 5);
 
 
