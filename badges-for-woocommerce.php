@@ -5,7 +5,7 @@ defined('ABSPATH') or die('No script kiddies please!!');
  * Plugin Name: Badges For WooCommerce
  * Plugin URI: https://example.com/wordpress-plugins/badges-woocommerce/
  * Description: A plugin to show badges in your WooCommerce store.
- * Version: 	1.0.4
+ * Version: 	1.0.0
  * Author:     Saloni
  * Author URI:  https://example.com/
  * Domain Path: /languages
@@ -125,11 +125,17 @@ function bgfw_display_discount_badge()
         }
     } else {
         $off_text = __('Out of stock', 'badges-for-woocommerce');
-        echo '<div class="bgfw-sales-badges">' . $off_text . '</div>';
+        echo '<div class="bgfw-out-stock-badge">' . $off_text . '</div>';
     }
 
 }
 
 add_action('woocommerce_single_product_summary', 'bgfw_display_discount_badge', 5);
 
+add_action('wp_enqueue_scripts', 'bgfw_register_frontend_assets');
+
+function bgfw_register_frontend_assets()
+{
+    wp_enqueue_style('bgfw-frontend-style', plugin_dir_url(__FILE__) . 'assets/css/frontend-style.css', false, '1.0.0');
+}
 

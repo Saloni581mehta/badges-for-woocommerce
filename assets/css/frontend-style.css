@@ -1,0 +1,73 @@
+.post-type-archive-product .bgfw-sales-badges {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #90172A;
+    color: #fff;
+    padding: 0.4rem 0.3125rem;
+    position: absolute;
+    line-height: 1;
+    width: 25%;
+}
+
+.single-product .bgfw-sales-badges {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #90172A;
+    color: #fff;
+    padding: 1rem 1rem;
+    position: absolute;
+    line-height: 1;
+    z-index: 999;
+}
+
+.post-type-archive-product .bgfw-out-stock-badge {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.4rem 0.3125rem;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.single-product .bgfw-out-stock-badge {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.post-type-archive-product .bgfw-new-badge {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #ff69b4;
+    color: #fff;
+    padding: 0.4rem 0.3125rem;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.single-product .bgfw-new-badge {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #ff69b4;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
