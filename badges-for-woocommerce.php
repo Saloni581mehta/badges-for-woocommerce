@@ -32,13 +32,34 @@ function bgfw_activation_settings()
     }
 }
 
-/*
- * Let's change the sale discount
- */
-add_filter('woocommerce_sale_flash', 'dbfw_discount_text', 10, 2);
+add_filter('woocommerce_sale_flash', 'bgfw_discount_text', 10, 2);
 
-function dbfw_discount_text($html, $flash)
+function bgfw_discount_text($html, $flash)
 {
-    $html = $html . 'off';
+    global $product;
+    ob_start();
+    if ($product->is_on_sale() && $product->is_in_stock()) {
+        ?>
+        <div class="bgfw-sales-badges">
+            <?php
+            echo '-';
+            echo bgfw_sale_price_items($product);
+            ?>
+        </div>
+        <?php
+    }
+    $data = ob_get_contents();
+    $html = $html . $data;
+    ob_end_clean();
     return $html;
+}
+
+function bgfw_sale_price_items($product)
+{
+    $regular_price = (float) $product->get_regular_price();
+    $sale_price = (float) $product->get_sale_price();
+    if ($sale_price != 0 || !empty($sale_price)) {
+        $percentage = round(100 - ($sale_price / $regular_price * 100)) . '%';
+    }
+    return $percentage;
 }
