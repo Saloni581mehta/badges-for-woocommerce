@@ -75,13 +75,33 @@ function bgfw_sale_price_items($product)
         }
 
         return $max_percentage ? $max_percentage . '%' : '';
-    } else {
-        // For simple products
-        $regular_price = (float) $product->get_regular_price();
-        $sale_price = (float) $product->get_sale_price();
+    } elseif ($product->is_type('grouped')) {
+        // Handle grouped products by checking all child products
+        $child_ids = $product->get_children();
+        $max_percentage = null;
 
-        if ($sale_price && $regular_price > 0) {
-            return round(100 - ($sale_price / $regular_price * 100)) . '%';
+        foreach ($child_ids as $child_id) {
+            $child_product = wc_get_product($child_id);
+            $percentage = bgfw_calculate_discount_percentage($child_product);
+            if ($percentage !== null && ($max_percentage === null || $percentage > $max_percentage)) {
+                $max_percentage = $percentage;
+            }
         }
+
+        return $max_percentage !== null ? $max_percentage . '%' : '';
+    } else {
+        return bgfw_calculate_discount_percentage($product) . '%';
+
     }
+}
+function bgfw_calculate_discount_percentage($product)
+{
+    $regular_price = (float) $product->get_regular_price();
+    $sale_price = (float) $product->get_sale_price();
+
+    if ($sale_price && $regular_price > 0) {
+        return round(100 - ($sale_price / $regular_price * 100));
+    }
+
+    return null;
 }
