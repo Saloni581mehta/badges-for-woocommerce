@@ -5,7 +5,7 @@ defined('ABSPATH') or die('No script kiddies please!!');
  * Plugin Name: Badges For WooCommerce
  * Plugin URI: https://example.com/wordpress-plugins/badges-woocommerce/
  * Description: A plugin to show badges in your WooCommerce store.
- * Version: 	1.0.1
+ * Version: 	1.0.4
  * Author:     Saloni
  * Author URI:  https://example.com/
  * Domain Path: /languages
@@ -53,13 +53,35 @@ function bgfw_discount_text($html, $flash)
     ob_end_clean();
     return $html;
 }
-
 function bgfw_sale_price_items($product)
 {
-    $regular_price = (float) $product->get_regular_price();
-    $sale_price = (float) $product->get_sale_price();
-    if ($sale_price != 0 || !empty($sale_price)) {
-        $percentage = round(100 - ($sale_price / $regular_price * 100)) . '%';
+    if ($product->is_type('variable')) {
+        // Get all variations
+        $variations = $product->get_available_variations();
+        $max_percentage = null;
+
+        foreach ($variations as $variation) {
+            $variation_product = wc_get_product($variation['variation_id']);
+
+            $regular_price = (float) $variation_product->get_regular_price();
+            $sale_price = (float) $variation_product->get_sale_price();
+
+            if ($sale_price && $regular_price > 0) {
+                $percentage = round(100 - ($sale_price / $regular_price * 100));
+                if ($max_percentage === null || $percentage > $max_percentage) {
+                    $max_percentage = $percentage;
+                }
+            }
+        }
+
+        return $max_percentage ? $max_percentage . '%' : '';
+    } else {
+        // For simple products
+        $regular_price = (float) $product->get_regular_price();
+        $sale_price = (float) $product->get_sale_price();
+
+        if ($sale_price && $regular_price > 0) {
+            return round(100 - ($sale_price / $regular_price * 100)) . '%';
+        }
     }
-    return $percentage;
 }
