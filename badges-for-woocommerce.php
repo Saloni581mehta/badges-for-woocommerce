@@ -105,3 +105,22 @@ function bgfw_calculate_discount_percentage($product)
 
     return null;
 }
+
+add_action('woocommerce_shop_loop_item_title', 'bgfw_display_discount_badge', 10);
+
+function bgfw_display_discount_badge()
+{
+    global $product;
+
+    if ($product->is_on_sale() && $product->is_in_stock()) {
+        $off_text = __('OFF', 'badges-for-woocommerce');
+        echo '<div class="bgfw-sales-badges">-' . bgfw_sale_price_items($product) . ' ' . $off_text . '</div>';
+    } else {
+        $off_text = __('Out of stock', 'badges-for-woocommerce');
+        echo '<div class="bgfw-sales-badges">' . $off_text . '</div>';
+    }
+
+}
+
+
+
