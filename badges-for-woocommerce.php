@@ -39,6 +39,13 @@ add_filter('woocommerce_sale_flash', 'bgfw_discount_text', 10, 2);
 function bgfw_discount_text($html, $flash)
 {
     global $product;
+
+    $is_enabled = get_option('bgfw_enable_discount_badges', 'no');
+
+    if ($is_enabled !== 'yes') {
+        return $html;
+    }
+
     ob_start();
     if ($product->is_on_sale() && $product->is_in_stock()) {
         ?>
