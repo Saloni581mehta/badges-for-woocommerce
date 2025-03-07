@@ -19,3 +19,15 @@ defined('ABSPATH') or die('No script kiddies please!!');
  *
  */
 
+register_activation_hook(__FILE__, 'bgfw_activation_settings');
+
+function bgfw_activation_settings()
+{
+    /**
+     * Check if WooCommerce is activated
+     */
+    if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+        deactivate_plugins(plugin_basename(__FILE__));
+        wp_die(__('Sorry, but this plugin requires WooCommerce in order to work.So please ensure that WooCommerce is both installed and activated.', 'http://wordpress.org/extend/plugins/woocommerce/'), 'Plugin dependency check', array('back_link' => true));
+    }
+}
