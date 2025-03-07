@@ -19,6 +19,8 @@ defined('ABSPATH') or die('No script kiddies please!!');
  *
  */
 
+include(plugin_dir_path(__FILE__) . 'inc/backend/admin-settings.php');
+
 register_activation_hook(__FILE__, 'bgfw_activation_settings');
 
 function bgfw_activation_settings()
