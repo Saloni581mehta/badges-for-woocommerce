@@ -1,0 +1,1 @@
+# badges-for-woocommerce
