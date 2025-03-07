@@ -7,11 +7,10 @@
 The plugin provides an easy-to-use interface for adding badges to product images and includes customizable badge text, colors, and display options to match your store’s branding and design preferences.
 
 ### Features
-- **Add custom badges** to products based on categories, tags, or custom fields.
-- **Display badges** on product listings, product detail pages, and cart pages.
+- **Add custom badges** to products.
+- **Display badges** on product listings, product detail pages.
 - Support for **conditional badges** like "On Sale," "New Arrival," "Limited Stock," etc.
 - **Customizable badge design**: Choose colors, text, and positioning.
-- Fully **responsive** and compatible with different screen sizes.
 - Extendable via **hooks and filters** for advanced customization.
 - Supports **WooCommerce product types** and variations.
 - Badge display based on stock status, sale price, or custom conditions.
@@ -19,9 +18,6 @@ The plugin provides an easy-to-use interface for adding badges to product images
 ## Requirements
 
 - **WooCommerce Plugin**: Must be installed and activated.
-- **WordPress**: Version 5.0 or higher.
-- **PHP**: Version 7.2 or higher.
-- **WooCommerce Version**: 4.0 or higher.
 
 ## Installation
 
@@ -32,12 +28,11 @@ The plugin provides an easy-to-use interface for adding badges to product images
 
 ## Configuration
 
-1. After activation, go to **WooCommerce > Settings > Badges for WooCommerce**.
+1. After activation, go to **WooCommerce > Settings > Badges**.
 2. Configure badge settings:
    - **Enable/disable badges** for products.
-   - **Customize badge text**, colors, font sizes, and positions.
    - Set **conditions** for badge display (e.g., for sale, in stock, limited stock).
-   - Choose where the badges should appear (on product listings, product pages, or cart).
+   - Choose where the badges should appear (on product listings, product pages).
    
 ## Customization
 
