@@ -23,13 +23,13 @@ defined('ABSPATH') or die('No script kiddies please!!');
 *  checking high performance order storage
  */
 
- add_action( 'before_woocommerce_init', 'bgfw_check_hpos_compatible');
+add_action( 'before_woocommerce_init', 'bgfw_check_hpos_compatible');
  
- function bgfw_check_hpos_compatible() {
+function bgfw_check_hpos_compatible() {
      if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
          \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
      }
- }
+}
  
  /*
  * check plugin dependencies
@@ -40,11 +40,11 @@ function bgfw_check_wooactivation() {
      if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
          update_option( 'bgfw_needs_wc', true );
      }
- }
+}
  
- add_action( 'admin_init', 'bgfw_self_deactivate_if_needed' );
+add_action( 'admin_init', 'bgfw_self_deactivate_if_needed' );
  
- function bgfw_self_deactivate_if_needed() {
+function bgfw_self_deactivate_if_needed() {
      if ( get_option( 'bgfw_needs_wc' ) ) {
          deactivate_plugins( plugin_basename( __FILE__ ) );
  
@@ -55,7 +55,7 @@ function bgfw_check_wooactivation() {
  
          add_action( 'admin_notices', 'bgfw_missing_wc_notice' );
      }
- }
+}
  
 function bgfw_missing_wc_notice() {
      echo '<div class="notice notice-error is-dismissible">';
@@ -63,6 +63,14 @@ function bgfw_missing_wc_notice() {
      echo '</div>';
  }
  
+/**
+ * Load Text Domain
+ */
+add_action( 'plugins_loaded', 'bgfw_load_textdomain' );
+
+function bgfw_load_textdomain() {
+    load_plugin_textdomain( 'badges-for-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+} 
 
 add_filter('woocommerce_sale_flash', 'bgfw_discount_text', 10, 2);
 
