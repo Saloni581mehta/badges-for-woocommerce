@@ -64,6 +64,17 @@ function bgfw_missing_wc_notice() {
     echo '</div>';
 }
 
+
+/**
+ * Load Text Domain
+ */
+add_action( 'plugins_loaded', 'bgfw_load_textdomain' );
+
+function bgfw_load_textdomain() {
+    load_plugin_textdomain( 'badges-for-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+
+
 /*
  * Let's change the sale discount
  */
