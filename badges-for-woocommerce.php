@@ -5,7 +5,7 @@ defined('ABSPATH') or die('No script kiddies please!!');
  * Plugin Name: Badges For WooCommerce
  * Plugin URI: https://example.com/wordpress-plugins/badges-woocommerce/
  * Description: A plugin to show badges in your WooCommerce store.
- * Version: 	1.0.4
+ * Version: 	1.0.0
  * Author:     Saloni
  * Author URI:  https://example.com/
  * Domain Path: /languages
@@ -19,18 +19,58 @@ defined('ABSPATH') or die('No script kiddies please!!');
  *
  */
 
-register_activation_hook(__FILE__, 'bgfw_activation_settings');
+ /*
+*  checking high performance order storage
+*/
 
-function bgfw_activation_settings()
-{
-    /**
-     * Check if WooCommerce is activated
-     */
-    if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-        deactivate_plugins(plugin_basename(__FILE__));
-        wp_die(__('Sorry, but this plugin requires WooCommerce in order to work.So please ensure that WooCommerce is both installed and activated.', 'http://wordpress.org/extend/plugins/woocommerce/'), 'Plugin dependency check', array('back_link' => true));
+add_action( 'before_woocommerce_init', 'bgfw_check_hpos_compatible');
+ 
+function bgfw_check_hpos_compatible() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+           \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
     }
 }
+   
+/*
+   * check plugin dependencies
+*/
+register_activation_hook( __FILE__, 'bgfw_check_wooactivation' );
+   
+function bgfw_check_wooactivation() {
+    if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+           update_option( 'bgfw_needs_wc', true );
+    }
+}
+   
+add_action( 'admin_init', 'bgfw_self_deactivate_if_needed' );
+   
+function bgfw_self_deactivate_if_needed() {
+    if ( get_option( 'bgfw_needs_wc' ) ) {
+           deactivate_plugins( plugin_basename( __FILE__ ) );
+   
+           if ( isset( $_GET['activate'] ) ) {
+               unset( $_GET['activate'] );
+           }
+           delete_option( 'bgfw_needs_wc' );
+   
+           add_action( 'admin_notices', 'bgfw_missing_wc_notice' );
+    }
+}
+   
+function bgfw_missing_wc_notice() {
+       echo '<div class="notice notice-error is-dismissible">';
+       echo '<p>' . esc_html__( 'This plugin requires WooCommerce to be installed and activated first. Please activate WooCommerce.', 'badges-for-woocommerce' ) . '</p>';
+       echo '</div>';
+}
+   
+/**
+   * Load Text Domain
+*/
+add_action( 'plugins_loaded', 'bgfw_load_textdomain' );
+  
+function bgfw_load_textdomain() {
+      load_plugin_textdomain( 'badges-for-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+} 
 
 add_filter('woocommerce_sale_flash', 'bgfw_discount_text', 10, 2);
 
