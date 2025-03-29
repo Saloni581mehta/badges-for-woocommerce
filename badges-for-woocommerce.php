@@ -5,7 +5,7 @@ defined('ABSPATH') or die('No script kiddies please!!');
  * Plugin Name: Badges For WooCommerce
  * Plugin URI: https://example.com/wordpress-plugins/badges-woocommerce/
  * Description: A plugin to show badges in your WooCommerce store.
- * Version: 	1.0.1
+ * Version: 	1.0.0
  * Author:     Saloni
  * Author URI:  https://example.com/
  * Domain Path: /languages
