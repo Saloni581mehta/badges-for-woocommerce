@@ -20,6 +20,26 @@
     z-index: 999;
 }
 
+.post-type-archive-product .bgfw-sales-badges,
+.single-product .bgfw-sales-badges {
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #90172A;
+    color: #fff;
+    padding: 0.4rem 0.3125rem;
+    position: absolute;
+    line-height: 1;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    transform: translate(10%, 10%); 
+}
+
+.woocommerce-loop-product__link, .single-product .product {
+    position: relative;
+}
+
+
 .post-type-archive-product .bgfw-out-stock-badge {
     font-size: 1rem;
     font-weight: 600;
