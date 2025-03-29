@@ -161,8 +161,6 @@ function bgfw_display_discount_badge()
     global $product;
 
     if ($product->is_on_sale() && $product->is_in_stock()) {
-        // $off_text = __('OFF', 'badges-for-woocommerce');
-        // echo '<div class="bgfw-sales-badges">-' . bgfw_sale_price_items($product) . ' ' . $off_text . '</div>';
         // Check if the product was published within the last 7 days
         $publish_date = $product->get_date_created();
         $current_date = current_time('timestamp');
